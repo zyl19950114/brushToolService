@@ -1,0 +1,23 @@
+.mdi {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.query-from {
+  flex: 1;
+  .ivu-form-item {
+    margin-bottom: 0;
+  }
+}

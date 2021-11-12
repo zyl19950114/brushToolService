@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <root-nav>
+      <transition name="Skleft">
+        <router-view></router-view>
+      </transition>
+    </root-nav>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import RootNav from "@/components/RootNav";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    RootNav,
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh;
+  overflow: hidden;
+}
+.Skleft-enter-active,
+.Sklef-leave-active {
+  transition: all 400ms;
+}
+.Skleft-leave-to {
+  transform: translate3d(-10%, 0, 0);
+  opacity: 1;
+}
+.Skleft-enter {
+  transform: translate3d(10%, 0, 0);
+  opacity: 0;
 }
 </style>
