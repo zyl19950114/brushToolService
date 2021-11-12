@@ -35,7 +35,10 @@
         </Upload>
       </Form-item>
     </Form>
-    <div class="file-list" v-if="!uploading && formData.apk_name !== ''">
+    <div
+      class="file-list"
+      v-if="!uploading && formData.apk_name !== '' && formData.apk_url !== ''"
+    >
       {{ (file && file.name) || `${formData.apk_name}.apk` }}
       <Button @click="handleDelete" type="text" class="file-list-btn">
         <i class="mdi mdi-close-circle"></i>
@@ -115,7 +118,7 @@ export default {
   },
   methods: {
     handleDelete() {
-      this.formData.apk_name = '';
+      this.formData.apk_name = "";
       this.file = null;
     },
     handleCancel() {
@@ -140,7 +143,7 @@ export default {
     handleUpload() {
       this.$refs.uploadApk.validate((valid) => {
         if (valid) {
-          if(this.data.status == 'edit' && !this.file) {
+          if (this.data.status == "edit" && !this.file) {
             this.handleSuccess();
             return;
           }

@@ -1,5 +1,5 @@
 <template>
-  <Modal :title="`${title}终端`" v-model="modal" :styles="{ top: '20px' }">
+  <Modal :title="`${title}终端`" v-model="modal" :styles="{ top: '60px' }">
     <Form
       :rules="rules"
       ref="HandleTerminal"
@@ -19,6 +19,13 @@
           placeholder="请输入备注"
         ></Input>
       </Form-item>
+      <Form-item label="绑定apk" prop="apk_id">
+        <Select v-model="formData.apk_id" filterable>
+          <Option v-for="item in apkList" :value="item.id" :key="item.id">
+            {{ item.apk_name }} <span>版本：{{ item.version }}</span>
+          </Option>
+        </Select>
+      </Form-item>
     </Form>
     <div slot="footer">
       <Button type="primary" @click="handleOk('HandleTerminal')">提交</Button>
@@ -29,7 +36,6 @@
 
 <script>
 import { formatDateTime } from "../../utils/base";
-
 export default {
   name: "HandleTerminal",
   props: {
@@ -60,14 +66,30 @@ export default {
             required: false,
           },
         ],
+        apk_id: [
+          {
+            required: false,
+          },
+        ],
       },
+      apkList: [],
       formData: {
         imei: "",
         remark: "",
+        apk_id: "",
       },
     };
   },
   computed: {
+    formatFormData() {
+      let data = {};
+      for (const k in this.formData) {
+        if (this.formData[k] && this.formData[k] !== "") {
+          data[k] = this.formData[k];
+        }
+      }
+      return data;
+    },
     title() {
       return this.data.status == "new" ? "导入" : "编辑";
     },
@@ -86,16 +108,33 @@ export default {
     },
   },
   methods: {
+    queryApkList() {
+      this.$axios
+        .post("/get", {
+          "[]": {
+            Apk: {},
+          },
+        })
+        .then((res) => {
+          this.total = res.data.total;
+          this.apkList = res.data["[]"].reduce((crr, next) => {
+            crr.push(next.Apk);
+            return crr;
+          }, []);
+          console.log("apkList", this.apkList);
+        });
+    },
     handleOk() {
       this.$refs.HandleTerminal.validate((valid) => {
         if (valid) {
+          console.log(this.formData.apk_id);
           const request = this.data.status == "add" ? "/post" : "/put";
           this.$axios
             .post(request, {
               Terminal: {
-                ...this.formData,
+                ...this.formatFormData,
                 create_time: formatDateTime(new Date()),
-                id: this.data.params.id
+                id: this.data.params.id,
               },
             })
             .then((res) => {
@@ -115,12 +154,26 @@ export default {
     },
     initializeParams() {
       this.handleReset();
+      this.queryApkList();
       if (this.data.status === "edit") {
-        const { imei, remark } = this.data.params;
+        const { imei, remark, apk_id } = this.data.params;
         console.log({ imei, remark });
-        this.formData = { imei, remark };
+        this.formData = { imei, remark, apk_id };
+        console.log(this.formData);
       }
     },
   },
 };
 </script>
+<style lang="scss">
+.ivu-select-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  & span {
+    color: #999;
+    font-size: 12px;
+    min-width: 80px;
+  }
+}
+</style>

@@ -28,7 +28,11 @@
       @on-click="handleApk('add')"
       @on-page="handlePage"
     />
-    <Table :context="self" :columns="columns" :data="data" stripe></Table>
+    <Table
+      :columns="columns"
+      :data="data"
+      stripe
+    ></Table>
     <handle-apk @on-ok="queryApkList({})" :visible.sync="visible" :data="editApkParams" />
   </div>
 </template>
@@ -45,7 +49,6 @@ export default {
   },
   data() {
     return {
-      self: this,
       editApkData: null,
       visible: false,
       pageParams: {
@@ -66,7 +69,6 @@ export default {
         {
           title: "apk名称",
           key: "apk_name",
-          width: 240,
         },
         {
           title: "apk链接",
@@ -75,7 +77,7 @@ export default {
         {
           title: "版本",
           key: "version",
-          width: 180
+          width: 140,
         },
         {
           title: "操作",
@@ -140,10 +142,13 @@ export default {
     },
   },
   created() {
-    this.queryApkList();
+    this.queryApkList({});
     // this.init
   },
   methods: {
+    onCurrentChange(currentRow) {
+      console.log(currentRow);
+    },
     handleEdit(params) {
       this.editApkData = params;
       this.handleApk("edit");
@@ -174,7 +179,7 @@ export default {
     handleClear() {
       this.pageParams.page = 0;
       this.$refs.queryForm.resetFields();
-      this.queryApkList();
+      this.queryApkList({});
     },
     handlePage(page) {
       this.pageParams.page = page - 1;
