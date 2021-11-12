@@ -132,7 +132,8 @@ export default {
         const style = {
           fontSize: "12px",
           color: "#fff",
-          padding: "4px 6px",
+          padding: "3px 6px",
+          display: 'inline-block',
           borderRadius: "4px",
           background: status ? "#3399ff" : "#9ea7b4",
           cursor: "pointer",
