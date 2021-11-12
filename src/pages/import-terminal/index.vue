@@ -66,6 +66,14 @@ export default {
           key: "imei",
         },
         {
+          title: "状态",
+          key: "apk_id",
+          render: (h, params) => {
+            const binded = params.row.apk_id ? true : false;
+            return this.status(h, binded);
+          },
+        },
+        {
           title: "备注",
           key: "remark",
         },
@@ -118,6 +126,26 @@ export default {
     };
   },
   computed: {
+    status() {
+      return function (h, status) {
+        console.log(h, status);
+        const style = {
+          fontSize: "12px",
+          color: "#fff",
+          padding: "4px 6px",
+          borderRadius: "4px",
+          background: status ? "#3399ff" : "#9ea7b4",
+          cursor: "pointer",
+        };
+        const domProps = {
+          innerHTML: status ? "已绑定" : "未绑定",
+        };
+        return h("span", {
+          style,
+          domProps,
+        });
+      };
+    },
     queryParamsData() {
       let params = {};
       for (const k in this.queryParams) {
