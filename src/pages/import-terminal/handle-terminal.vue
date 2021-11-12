@@ -11,6 +11,13 @@
       <Form-item label="终端imei" prop="imei">
         <Input v-model="formData.imei" placeholder="请输入imei"></Input>
       </Form-item>
+      <Form-item label="绑定apk" prop="apk_id">
+        <Select v-model="formData.apk_id" filterable>
+          <Option v-for="item in apkList" :value="item.id" :key="item.id">
+            {{ item.apk_name }} <span>版本：{{ item.version }}</span>
+          </Option>
+        </Select>
+      </Form-item>
       <Form-item label="备注" prop="remark">
         <Input
           type="textarea"
@@ -18,13 +25,6 @@
           v-model="formData.remark"
           placeholder="请输入备注"
         ></Input>
-      </Form-item>
-      <Form-item label="绑定apk" prop="apk_id">
-        <Select v-model="formData.apk_id" filterable>
-          <Option v-for="item in apkList" :value="item.id" :key="item.id">
-            {{ item.apk_name }} <span>版本：{{ item.version }}</span>
-          </Option>
-        </Select>
       </Form-item>
     </Form>
     <div slot="footer">

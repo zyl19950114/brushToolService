@@ -37,7 +37,7 @@
     </Form>
     <div
       class="file-list"
-      v-if="!uploading && formData.apk_name !== '' && formData.apk_url !== ''"
+      v-if="!uploading  && formData.apk_url !== ''"
     >
       {{ (file && file.name) || `${formData.apk_name}.apk` }}
       <Button @click="handleDelete" type="text" class="file-list-btn">

@@ -14,7 +14,7 @@
             </FormItem>
           </Col>
           <Col span="4" class="col">
-            <FormItem label="apk连接" prop="apk_name">
+            <FormItem label="apk链接" prop="apk_name">
               <Input v-model="queryParams.apk_url" clearable />
             </FormItem>
           </Col>
