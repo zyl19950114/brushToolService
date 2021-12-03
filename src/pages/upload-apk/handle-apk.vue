@@ -37,10 +37,10 @@
     </Form>
     <div class="file-list" v-if="!uploading">
       <span v-if="data.status === 'add'">
-        {{ file && file.name }}
+        {{ file && `${formData.apk_name}.apk` }}
       </span>
       <span v-else>
-        {{ formData.apk_name }}
+        {{ `${formData.apk_name}.apk` }}
       </span>
       <Button @click="handleDelete" type="text" class="file-list-btn">
         <i class="mdi mdi-close-circle"></i>
