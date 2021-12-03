@@ -28,7 +28,7 @@
       </Form-item>
     </Form>
     <div slot="footer">
-      <Button type="primary" @click="handleOk('HandleTerminal')">提交</Button>
+      <Button type="primary" @click="handleOk()">提交</Button>
       <Button @click="handleCancel" style="margin-left: 8px">取消</Button>
     </div>
   </Modal>
@@ -36,6 +36,7 @@
 
 <script>
 import { formatDateTime } from "../../utils/base";
+
 export default {
   name: "HandleTerminal",
   props: {
@@ -127,7 +128,6 @@ export default {
     handleOk() {
       this.$refs.HandleTerminal.validate((valid) => {
         if (valid) {
-          console.log(this.formData.apk_id);
           const request = this.data.status == "add" ? "/post" : "/put";
           this.$axios
             .post(request, {

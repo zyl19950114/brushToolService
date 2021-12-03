@@ -35,11 +35,13 @@
         </Upload>
       </Form-item>
     </Form>
-    <div
-      class="file-list"
-      v-if="!uploading"
-    >
-      {{ (file && file.name) || formData.apk_name }}
+    <div class="file-list" v-if="!uploading">
+      <span v-if="data.status === 'add'">
+        {{ file && file.name }}
+      </span>
+      <span v-else>
+        {{ formData.apk_name }}
+      </span>
       <Button @click="handleDelete" type="text" class="file-list-btn">
         <i class="mdi mdi-close-circle"></i>
       </Button>
@@ -100,7 +102,8 @@ export default {
   },
   computed: {
     title() {
-      return this.data.status == "new" ? "上传" : "编辑";
+      console.log(this.data);
+      return this.data.status == "add" ? "上传" : "编辑";
     },
     modal: {
       get() {
@@ -148,6 +151,15 @@ export default {
             return;
           }
           this.uploading = true;
+
+          // 【TEST】
+          // ftp.put(this.file, "~/file.apk", (res) => {
+          //   console.log(res)
+          //   if (!res) {
+          //     console.log("File transferred successfully!");
+          //   }
+          // });
+
           const newFile = new File(
             [this.file],
             `${this.file.name.split(".")[0]}_${new Date().getTime()}.apk`

@@ -63,11 +63,7 @@ export default {
         {
           title: "新程序版本",
           key: "new_version",
-        },
-        {
-          title: "备注",
-          key: "remark",
-        },
+        }
       ],
       data: [],
       total: 0,
@@ -117,14 +113,12 @@ export default {
         .then((res) => {
           this.total = res.data.total;
           console.log(res);
-          // this.data = res.data["[]"].reduce((crr, next) => {
-          //   crr.push(next.Log);
-          //   return crr;
-          // }, []);
+          this.data = res.data["[]"].reduce((crr, next) => {
+            crr.push(next.Log);
+            return crr;
+          }, []);
         });
     },
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

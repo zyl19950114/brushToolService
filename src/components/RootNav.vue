@@ -27,6 +27,9 @@
             <slot />
           </div>
         </div>
+        <footer class="layout-footer">
+          copyright
+        </footer>
       </i-col>
     </Row>
   </div>
@@ -120,6 +123,8 @@ export default {
 }
 .layout-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   margin: 15px;
   overflow: hidden;
   background: #fff;
@@ -127,6 +132,7 @@ export default {
 }
 .layout-content-main {
   padding: 10px;
+  flex: 1;
 }
 .layout-copy {
   text-align: center;
@@ -140,6 +146,15 @@ export default {
   height: 60px;
   background: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.layout-footer {
+  padding: 2px 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  background: #a5a5a5;
+  color: #fff
 }
 
 .ivu-col {
