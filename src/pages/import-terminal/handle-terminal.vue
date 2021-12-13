@@ -69,7 +69,8 @@ export default {
         ],
         apk_id: [
           {
-            required: false,
+            required: true,
+            message: "请绑定apk",
           },
         ],
       },
@@ -92,7 +93,7 @@ export default {
       return data;
     },
     title() {
-      return this.data.status == "new" ? "导入" : "编辑";
+      return this.data.status == "add" ? "导入" : "编辑";
     },
     modal: {
       get() {

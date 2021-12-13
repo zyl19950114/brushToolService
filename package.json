@@ -14,7 +14,8 @@
     "ftp": "^0.3.10",
     "iview": "^3.5.4",
     "vue": "^2.6.11",
-    "vue-router": "^3.5.3"
+    "vue-router": "^3.5.3",
+    "xlsx": "^0.17.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

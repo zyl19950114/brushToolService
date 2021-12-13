@@ -1,5 +1,5 @@
 {
-  "baseURL": "http://192.168.5.55:8011/brushToolService",
+  "baseURL": "http://183.47.46.244:8011/brushToolService",
   "fileServerUrl": "https://file.pocradio.com:18228/filews/upload/media",
   "webTtitle": "Brush Tool"
 }

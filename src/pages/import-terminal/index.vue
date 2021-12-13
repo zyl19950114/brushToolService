@@ -22,13 +22,23 @@
       :total="total"
       @on-click="handleTerminal('add')"
       @on-page="handlePage"
-    />
+    >
+      <Button
+        class="bulk-import-btn"
+        type="primary"
+        shape="circle"
+        @click="excelVisible = true"
+        >批量导入</Button
+      >
+    </list-top>
+
     <Table :context="self" :columns="columns" :data="data" stripe></Table>
     <handle-terminal
       @on-ok="queryTerminalList({})"
-      :visible.sync="visible"
+      :visible.sync="terminalVisible"
       :data="editTerminalParams"
     />
+    <import-excel @on-ok="queryTerminalList({})" :visible.sync="excelVisible" />
   </div>
 </template>
 
@@ -36,9 +46,12 @@
 import HandleTerminal from "./handle-terminal.vue";
 import ListTop from "../../components/list-top.vue";
 import QueryFrom from "../../components/query-from.vue";
+import ImportExcel from "../../components/import-excel.vue";
+
 export default {
   components: {
     HandleTerminal,
+    ImportExcel,
     ListTop,
     QueryFrom,
   },
@@ -46,7 +59,8 @@ export default {
     return {
       self: this,
       editTerminalData: null,
-      visible: false,
+      terminalVisible: false,
+      excelVisible: false,
       pageParams: {
         page: 0,
         count: 10,
@@ -133,7 +147,7 @@ export default {
           fontSize: "12px",
           color: "#fff",
           padding: "3px 6px",
-          display: 'inline-block',
+          display: "inline-block",
           borderRadius: "4px",
           background: status ? "#3399ff" : "#9ea7b4",
           cursor: "pointer",
@@ -190,7 +204,7 @@ export default {
         },
         status,
       };
-      this.visible = true;
+      this.terminalVisible = true;
     },
     handleClear() {
       this.pageParams.page = 0;
@@ -225,4 +239,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bulk-import-btn {
+  margin-left: 10px;
+}
+</style>
