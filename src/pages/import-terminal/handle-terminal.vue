@@ -28,7 +28,7 @@
       </Form-item>
     </Form>
     <div slot="footer">
-      <!-- <Button type="primary" @click="handleOk()">提交</Button> -->
+      <Button type="primary" @click="handleOk()">提交</Button>
       <Button @click="handleCancel" style="margin-left: 8px">取消</Button>
     </div>
   </Modal>
