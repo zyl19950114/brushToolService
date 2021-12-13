@@ -22,6 +22,7 @@
 
 <script>
 import XLSX from "xlsx";
+
 export default {
   name: "import-excel",
   props: {
