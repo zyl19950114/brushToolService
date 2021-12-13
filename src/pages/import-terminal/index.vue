@@ -142,7 +142,6 @@ export default {
   computed: {
     status() {
       return function (h, status) {
-        console.log(h, status);
         const style = {
           fontSize: "12px",
           color: "#fff",

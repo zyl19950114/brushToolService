@@ -66,7 +66,6 @@ export default {
       const that = this;
       // 拿取文件对象
       var f = this.file;
-      console.log(f);
       // 用FileReader来读取
       var reader = new FileReader();
       // 重写FileReader上的readAsBinaryString方法
@@ -87,7 +86,6 @@ export default {
           });
           outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
           // 自定义方法向父组件传递数据
-          console.log("outdata = " + JSON.stringify(outdata));
           that.handleImport(outdata);
         };
         reader.readAsArrayBuffer(f);
@@ -111,21 +109,27 @@ export default {
       console.log(this.file);
       return false;
     },
-    handleImport(outdata) {
-      console.log(outdata);
-      outdata.forEach((res) => {
+    handleImport(list) {
+      console.log(list);
+      const updateFun = (i) => {
         this.$axios
           .post("/post", {
             Terminal: {
-              ...res
+              ...list[i],
             },
           })
           .then((res) => {
-            console.log(res);
-            if (res.status === 200) this.$emit("on-ok");
-            this.handleCancel();
+            i++;
+            if (i == list.length) {
+              console.log("完成");
+              this.$emit("on-ok");
+              this.handleCancel();
+              return;
+            }
+            updateFun(i);
           });
-      });
+      };
+      updateFun(0);
     },
   },
 };
