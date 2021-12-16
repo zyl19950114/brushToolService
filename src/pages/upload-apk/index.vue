@@ -4,11 +4,6 @@
       <Form label-position="top" class="query-from" :model="queryParams" ref="queryForm">
         <Row :gutter="16">
           <Col span="4" class="col">
-            <FormItem label="apk编号" prop="id">
-              <Input v-model="queryParams.id" clearable />
-            </FormItem>
-          </Col>
-          <Col span="4" class="col">
             <FormItem label="apk名称" prop="apk_name">
               <Input v-model="queryParams.apk_name" clearable />
             </FormItem>
@@ -16,6 +11,11 @@
           <Col span="4" class="col">
             <FormItem label="apk链接" prop="apk_name">
               <Input v-model="queryParams.apk_url" clearable />
+            </FormItem>
+          </Col>
+          <Col span="4" class="col">
+            <FormItem label="apk版本" prop="version">
+              <Input v-model="queryParams.version" clearable />
             </FormItem>
           </Col>
         </Row>
@@ -27,8 +27,21 @@
       :total="total"
       @on-click="handleApk('add')"
       @on-page="handlePage"
-    />
+      @on-page-size="handlePageSize"
+    >
+      <Button
+        @click="handleDeleteApks"
+        :disabled="selected.length === 0"
+        style="margin-left: 10px"
+        type="error"
+        shape="circle"
+      >
+        <i class="mdi mdi-delete-outline"></i> 批量删除</Button
+      ></list-top
+    >
     <Table
+      @on-selection-change="onSelectionChange"
+      height="650"
       :columns="columns"
       :data="data"
       stripe
@@ -49,6 +62,7 @@ export default {
   },
   data() {
     return {
+      selected: [],
       editApkData: null,
       visible: false,
       pageParams: {
@@ -56,19 +70,20 @@ export default {
         count: 10,
       },
       queryParams: {
-        id: "",
         apk_name: "",
         apk_url: "",
+        version: "",
       },
       columns: [
         {
-          title: "编号",
-          key: "id",
-          width: 100,
+          type: "selection",
+          width: 60,
+          align: "center",
         },
         {
           title: "apk名称",
           key: "apk_name",
+          sortable: true,
         },
         {
           title: "apk链接",
@@ -78,6 +93,7 @@ export default {
           title: "版本",
           key: "version",
           width: 140,
+          sortable: true,
         },
         {
           title: "操作",
@@ -115,7 +131,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.handleDelete(params.row); // 点击操作事件
+                    this.handleDelete(params.row.id); // 点击操作事件
                   },
                 },
               }),
@@ -132,7 +148,7 @@ export default {
       let params = {};
       for (const k in this.queryParams) {
         if (this.queryParams[k] && this.queryParams[k] !== "") {
-          params[k] = this.queryParams[k];
+          params[`${k}$`] = `%${this.queryParams[k]}%`;
         }
       }
       return params;
@@ -146,6 +162,17 @@ export default {
     // this.init
   },
   methods: {
+    async handleDeleteApks() {
+      const ids = await this.selected.reduce((crr, next) => {
+        crr.push(next.id);
+        return crr;
+      }, []);
+      this.handleDelete(...ids);
+    },
+    onSelectionChange(value) {
+      this.selected = value;
+      console.log(value);
+    },
     onCurrentChange(currentRow) {
       console.log(currentRow);
     },
@@ -153,17 +180,21 @@ export default {
       this.editApkData = params;
       this.handleApk("edit");
     },
-    handleDelete(params) {
+    handleDelete(...arg) {
+      console.log();
       this.confirmDialog("确定删除该apk？", true, () => {
         this.$axios
           .post("/delete", {
             Apk: {
-              id: params.id,
+              "id{}": arg,
             },
           })
           .then((res) => {
+            console.log(res);
+            res.data.code == 500 && this.$Message.warning("存在已被绑定的apk，删除失败");
+            res.data.code == 200 && this.queryApkList({});
             this.$Modal.remove();
-            this.queryApkList({});
+            this.selected = [];
           });
       });
     },
@@ -185,12 +216,17 @@ export default {
       this.pageParams.page = page - 1;
       this.queryApkList({});
     },
+    handlePageSize(pageSize) {
+      this.pageParams.count = pageSize;
+      this.queryApkList({});
+    },
     queryApkList(params) {
       this.$axios
         .post("/get", {
           "[]": {
             Apk: {
               ...params,
+              "@order": "id-",
             },
             query: 2,
             ...this.pageParams,
@@ -198,6 +234,10 @@ export default {
           "total@": "/[]/total",
         })
         .then((res) => {
+          if (res.data.total === 0) {
+            this.$Message.warning("暂无数据");
+            return;
+          }
           this.total = res.data.total;
           this.data = res.data["[]"].reduce((crr, next) => {
             crr.push(next.Apk);

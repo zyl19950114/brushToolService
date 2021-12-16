@@ -28,7 +28,7 @@
           </div>
         </div>
         <footer class="layout-footer">
-          copyright
+          Kirisun Communication Co.,Ltd v1.0.0
         </footer>
       </i-col>
     </Row>

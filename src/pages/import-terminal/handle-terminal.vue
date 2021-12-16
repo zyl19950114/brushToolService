@@ -8,8 +8,8 @@
       :label-width="80"
       @on-cancel="handleReset"
     >
-      <Form-item label="终端imei" prop="imei">
-        <Input v-model="formData.imei" placeholder="请输入imei"></Input>
+      <Form-item label="终端IMEI" prop="imei">
+        <Input type="number" v-model="formData.imei" placeholder="请输入IMEI"></Input>
       </Form-item>
       <Form-item label="绑定apk" prop="apk_id">
         <Select v-model="formData.apk_id" filterable>
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import { formatDateTime } from "../../utils/base";
 
 export default {
   name: "HandleTerminal",
@@ -134,7 +133,6 @@ export default {
             .post(request, {
               Terminal: {
                 ...this.formatFormData,
-                create_time: formatDateTime(new Date()),
                 id: this.data.params.id,
               },
             })

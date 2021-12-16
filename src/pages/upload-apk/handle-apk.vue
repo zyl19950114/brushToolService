@@ -36,12 +36,7 @@
       </Form-item>
     </Form>
     <div class="file-list" v-if="!uploading">
-      <span v-if="data.status === 'add'">
-        {{ file && `${formData.apk_name}.apk` }}
-      </span>
-      <span v-else>
-        {{ `${formData.apk_name}.apk` }}
-      </span>
+      {{ file && file.name }}
       <Button @click="handleDelete" type="text" class="file-list-btn">
         <i class="mdi mdi-close-circle"></i>
       </Button>
@@ -124,8 +119,36 @@ export default {
       this.formData.apk_name = "";
       this.file = null;
     },
+    queryApkList(params) {
+      return new Promise((resovle, reject) => {
+        this.$axios
+          .post("/get", {
+            "[]": {
+              Apk: {
+                ...params,
+              },
+            },
+          })
+          .then((res) => {
+            if (res.data["[]"]) {
+              resovle(true);
+            } else {
+              resovle(false);
+            }
+          });
+      });
+    },
     handleCancel() {
       this.$emit("update:visible", false);
+    },
+    queryParamsData() {
+      let params = {};
+      for (const k in this.formData) {
+        if (this.formData[k] && this.formData[k] !== "") {
+          params[k] = this.formData[k];
+        }
+      }
+      return params;
     },
     handleSuccess(response, file, fileList) {
       const request = this.data.status == "add" ? "/post" : "/put";
@@ -146,25 +169,31 @@ export default {
     handleUpload() {
       this.$refs.uploadApk.validate((valid) => {
         if (valid) {
-          if (this.data.status == "edit" && !this.file) {
-            this.handleSuccess();
-            return;
-          }
-          this.uploading = true;
+          this.queryApkList(this.queryParamsData()).then((res) => {
+            if (res && this.data.status == "add") {
+              this.$Message.warning("已存在相同的apk数据");
+              return;
+            }
+            if (this.data.status == "edit" && !this.file) {
+              this.handleSuccess();
+              return;
+            }
+            this.uploading = true;
 
-          // 【TEST】
-          // ftp.put(this.file, "~/file.apk", (res) => {
-          //   console.log(res)
-          //   if (!res) {
-          //     console.log("File transferred successfully!");
-          //   }
-          // });
+            // 【TEST】
+            // ftp.put(this.file, "~/file.apk", (res) => {
+            //   console.log(res)
+            //   if (!res) {
+            //     console.log("File transferred successfully!");
+            //   }
+            // });
 
-          const newFile = new File(
-            [this.file],
-            `${this.file.name.split(".")[0]}_${new Date().getTime()}.apk`
-          );
-          this.$refs.upload.post(newFile);
+            const newFile = new File(
+              [this.file],
+              `${this.file.name.split(".")[0]}_${new Date().getTime()}.apk`
+            );
+            this.$refs.upload.post(newFile);
+          });
         }
       });
     },
@@ -189,7 +218,6 @@ export default {
       }
 
       this.file = file;
-      this.formData.apk_name = this.file.name.split(".")[0];
       console.log(this.file);
       return false;
     },

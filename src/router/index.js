@@ -4,7 +4,6 @@ import VRouter from "vue-router"
 Vue.use(VRouter)
 
 export default new VRouter({
-  mode: 'history',
   routes: [
     {
       path: '/',

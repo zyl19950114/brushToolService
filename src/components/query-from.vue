@@ -1,8 +1,6 @@
 <template>
   <div
     class="flex between brush-tool-card"
-    @mouseover="isCloseShow = true"
-    @mouseleave="isCloseShow = false"
   >
     <slot></slot>
     <div class="btn-wrap">
@@ -14,15 +12,31 @@
         @click="handleClick('on-query')"
       >
         <Icon v-if="!loading" type="ios-search" color="#fff" />{{ searchText }}
+        <!-- <Icon
+          v-if="hasClear"
+          v-show="isCloseShow"
+          @click="handleClick('on-clear')"
+          type="ios-search"
+          color="#fff"
+        />清除 -->
       </Button>
-      <div
+      <Button
+        :loading="loading"
+        type="error"
+        shape="circle"
+        class="btn clear-btn"
+        @click="handleClick('on-clear')"
+      >
+        <Icon type="md-close" color="#fff" />清除
+      </Button>
+      <!-- <div
         v-if="hasClear"
         class="clear-btn"
         v-show="isCloseShow"
         @click="handleClick('on-clear')"
       >
         <Icon type="md-close" size="10" color="#" />清除
-      </div>
+      </div> -->
       <!-- <div class="tc mt5 grey-text close" v-show="handleClick('on-clear')"><Icon type="md-close" size="10" color="#"/>清除</div> -->
     </div>
   </div>
@@ -51,7 +65,7 @@ export default {
   },
   methods: {
     handleClick(type) {
-      console.log(type)
+      console.log(type);
       this.$emit(type, null, "query");
     },
   },
@@ -63,17 +77,11 @@ export default {
   padding-top: 10px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgb(240, 240, 240);
-
 }
 .btn-wrap {
   margin-left: auto;
 }
 .clear-btn {
-  position: absolute;
-  color: #333;
-  cursor: pointer;
-  &:hover {
-    color: #333;
-  }
+  margin-left: 8px;
 }
 </style>

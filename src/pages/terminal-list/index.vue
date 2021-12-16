@@ -22,7 +22,7 @@
       </Form>
     </query-from>
     <list-top btnText="导入终端" @on-click="handleTerminal('new')" />
-    <Table :columns="columns" :data="data"></Table>
+    <Table height="650" :columns="columns" :data="data"></Table>
     <handle-terminal :visible.sync="visible" :data="editTerminalParams" />
   </div>
 </template>
@@ -84,7 +84,7 @@ export default {
       let params = {};
       for (const k in this.queryParams) {
         if (this.queryParams[k] && this.queryParams[k] !== "") {
-          params[k] = this.queryParams[k];
+          params[`${k}$`] = `%${this.queryParams[k]}%`;
         }
       }
       console.log("params", params);

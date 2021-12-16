@@ -111,25 +111,17 @@ export default {
     },
     handleImport(list) {
       console.log(list);
-      const updateFun = (i) => {
-        this.$axios
-          .post("/post", {
-            Terminal: {
-              ...list[i],
-            },
-          })
-          .then((res) => {
-            i++;
-            if (i == list.length) {
-              console.log("完成");
-              this.$emit("on-ok");
-              this.handleCancel();
-              return;
-            }
-            updateFun(i);
-          });
-      };
-      updateFun(0);
+
+      this.$axios
+        .post("/post", {
+          "Terminal[]": list,
+        })
+        .then((res) => {
+          console.log("完成");
+          this.$emit("on-ok");
+          this.handleCancel();
+          return;
+        });
     },
   },
 };

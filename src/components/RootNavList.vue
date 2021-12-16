@@ -14,16 +14,19 @@
         :index="item.path"
         :key="item.path"
       >
-        <Icon :type="item.meta.icon" :size="iconSize"></Icon>
+        <Icon v-if="navShow" :type="item.meta.icon" :size="iconSize"></Icon>
+        <Poptip v-else trigger="hover" :content="item.meta.navName" placement="right">
+          <Icon :type="item.meta.icon" :size="iconSize"></Icon>
+        </Poptip>
         <span v-show="navShow" class="layout-text">{{ item.meta.navName }}</span>
       </Menu-item>
-      <Submenu v-if="'children' in item" :index="item.path" :key="item.path">
+      <!-- <Submenu v-if="'children' in item" :index="item.path" :key="item.path">
         <template #title>
           <Icon :type="item.meta.icon" :size="iconSize"></Icon>
           <span v-show="navShow" class="layout-text">{{ item.meta.navName }}</span>
         </template>
         <root-nav-list :routesList="item.children" />
-      </Submenu>
+      </Submenu> -->
     </template>
   </Menu>
 </template>

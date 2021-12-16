@@ -1,34 +1,56 @@
 <template>
   <div class="upload-terminal">
-    <!-- <query-from @on-query="queryLogList(queryParamsData)" @on-clear="handleClear">
+    <query-from @on-query="queryLogList(queryParamsData)" @on-clear="handleClear">
       <Form label-position="top" class="query-from" :model="queryParams" ref="queryForm">
         <Row :gutter="16">
+          <Col span="4" class="col">
+            <FormItem label="终端IMEI" prop="imei">
+              <Input v-model="queryParams.imei" clearable />
+            </FormItem>
+          </Col>
+          <Col span="4" class="col">
+            <FormItem label="旧程序版本" prop="old_version">
+              <Input v-model="queryParams.old_version" clearable />
+            </FormItem>
+          </Col>
+          <Col span="4" class="col">
+            <FormItem label="新程序版本" prop="new_version">
+              <Input v-model="queryParams.new_version" clearable />
+            </FormItem>
+          </Col>
           <Col span="4" class="col">
             <FormItem label="操作时间" prop="operate_time">
               <Date-picker
                 v-model="queryParams.operate_time"
-                format="yyyy-MM-dd"
                 type="date"
                 placeholder="选择日期"
-                style="width: 200px"
+                style="width: 100%"
               ></Date-picker>
             </FormItem>
           </Col>
         </Row>
       </Form>
-    </query-from> -->
-    <list-top pageShow :btnShow="false" :total="total" @on-page="handlePage" />
-    <Table :context="self" :columns="columns" :data="data" stripe></Table>
+    </query-from>
+    <list-top
+      pageShow
+      :btnShow="false"
+      :total="total"
+      @on-page="handlePage"
+      @on-page-size="handlePageSize"
+    />
+    <Table height="650" :context="self" :columns="columns" :data="data" stripe></Table>
   </div>
 </template>
 
 <script>
-import QueryFrom from "../../components/query-from.vue";
 import ListTop from "../../components/list-top.vue";
+import QueryFrom from "../../components/query-from.vue";
+import { formatDateTime } from "../../utils/base";
+
 export default {
   components: {
     ListTop,
-    // QueryFrom,
+    QueryFrom,
   },
   data() {
     return {
@@ -40,7 +62,10 @@ export default {
         count: 10,
       },
       queryParams: {
-        operate_time: ''
+        imei: "",
+        old_version: "",
+        new_version: "",
+        operate_time: "",
       },
       columns: [
         {
@@ -49,7 +74,7 @@ export default {
           width: 100,
         },
         {
-          title: "终端imei",
+          title: "终端IMEI",
           key: "imei",
         },
         {
@@ -59,11 +84,13 @@ export default {
         {
           title: "旧程序版本",
           key: "old_version",
+          sortable: true,
         },
         {
           title: "新程序版本",
           key: "new_version",
-        }
+          sortable: true,
+        },
       ],
       data: [],
       total: 0,
@@ -74,9 +101,18 @@ export default {
       let params = {};
       for (const k in this.queryParams) {
         if (this.queryParams[k] && this.queryParams[k] !== "") {
-          params[k] = this.queryParams[k];
+          console.log(k, `%${formatDateTime(this.queryParams[k])}%`);
+          k == "operate_time"
+            ? (params[`${k}$`] = `%${formatDateTime(this.queryParams[k])}%`)
+            : (params[`${k}$`] = `%${this.queryParams[k]}%`);
+          // if (k === "date") {
+          //   params[`${k}$`] = `%${formatDateTime(this.queryParams[k])}%`;
+          // } else {
+          //   params[`${k}$`] = `%${this.queryParams[k]}%`;
+          // }
         }
       }
+      console.log(params);
       return params;
     },
   },
@@ -84,6 +120,11 @@ export default {
     this.queryLogList({});
   },
   methods: {
+    handleClear() {
+      this.pageParams.page = 0;
+      this.$refs.queryForm.resetFields();
+      this.queryLogList({});
+    },
     handleEdit(params) {
       this.editLogData = params;
       this.handleLog("edit");
@@ -92,18 +133,17 @@ export default {
       this.pageParams.page = page - 1;
       this.queryLogList({});
     },
-    handleClear() {
-      this.pageParams.page = 0;
-      this.$refs.queryForm.resetFields();
+    handlePageSize(pageSize) {
+      this.pageParams.count = pageSize;
       this.queryLogList({});
     },
     queryLogList(params) {
-      console.log(params);
       this.$axios
         .post("/get", {
           "[]": {
             Log: {
               ...params,
+              "@order": "id-",
             },
             query: 2,
             ...this.pageParams,
@@ -111,8 +151,11 @@ export default {
           "total@": "/[]/total",
         })
         .then((res) => {
+          if (res.data.total === 0) {
+            this.$Message.warning("暂无数据");
+            return;
+          }
           this.total = res.data.total;
-          console.log(res);
           this.data = res.data["[]"].reduce((crr, next) => {
             crr.push(next.Log);
             return crr;
