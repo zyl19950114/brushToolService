@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <root-nav>
+    <router-view v-if="$route.path === '/login'" />
+    <root-nav v-else>
       <transition name="Skleft">
-        <router-view></router-view>
+        <router-view />
       </transition>
     </root-nav>
   </div>

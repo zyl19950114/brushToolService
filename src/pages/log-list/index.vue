@@ -38,7 +38,7 @@
       @on-page="handlePage"
       @on-page-size="handlePageSize"
     />
-    <Table height="650" :context="self" :columns="columns" :data="data" stripe></Table>
+    <Table height="620" :context="self" :columns="columns" :data="data" stripe></Table>
   </div>
 </template>
 

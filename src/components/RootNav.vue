@@ -1,34 +1,34 @@
 <template>
   <div class="layout" :class="{ 'layout-hide-text': spanLeft < 3 }">
+    <div class="layout-header">
+      <img class="kirisun-logo" src="@/assets/kirisun-logo.png" alt="" />
+      <span class="kirisun-text">终端刷写工具</span>
+      <Icon
+        @click="toggleClick"
+        :class="['menu-icon', { 'menu-icon-hide': spanLeft === 1 }]"
+        type="md-menu"
+        size="32"
+      ></Icon>
+    </div>
     <Row type="flex">
       <i-col :span="spanLeft" class="layout-menu-left">
         <root-nav-list :routesList="routesList" :navShow="navShow" />
       </i-col>
       <i-col :span="spanRight">
-        <div class="layout-header">
-          <i-button type="text" @click="toggleClick">
-            <Icon
-              :class="['menu-icon', { 'menu-icon-hide': spanLeft === 1 }]"
-              type="md-menu"
-              size="32"
-            ></Icon>
-          </i-button>
-        </div>
-        <div class="layout-breadcrumb">
-          <Breadcrumb>
-            <Breadcrumb-item href="/">首页</Breadcrumb-item>
-            <Breadcrumb-item :href="$route.path">{{
-              $route.meta.navName
-            }}</Breadcrumb-item>
-          </Breadcrumb>
-        </div>
-        <div class="layout-content">
-          <div class="layout-content-main">
-            <slot />
+        <div class="layout-content-main">
+          <div class="layout-breadcrumb">
+            <Breadcrumb>
+              <Breadcrumb-item href="/">首页</Breadcrumb-item>
+              <Breadcrumb-item :href="$route.path">{{
+                $route.meta.navName
+              }}</Breadcrumb-item>
+            </Breadcrumb>
           </div>
+          <slot />
         </div>
         <footer class="layout-footer">
-          Kirisun Communication Co.,Ltd v1.0.0
+          Copyright © 2020 - 2021 Kirisun Communication,Ltd. All Rights Reserved
+          brushTools V1.0
         </footer>
       </i-col>
     </Row>
@@ -114,21 +114,23 @@ export default {
   border-radius: 4px;
   overflow: hidden;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .ivu-row-flex {
   height: 100%;
+  overflow: hidden;
 }
 .layout-breadcrumb {
-  padding: 10px 15px 0;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e3e3e3;
 }
 .layout-content {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  margin: 15px;
   overflow: hidden;
   background: #fff;
-  border-radius: 4px;
 }
 .layout-content-main {
   padding: 10px;
@@ -143,9 +145,22 @@ export default {
   background: #464c5b;
 }
 .layout-header {
-  height: 60px;
-  background: #fff;
+  height: 46px;
+  background: #515a6e;
+  display: flex;
+  padding: 0 10px;
+  align-items: center;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  .kirisun-logo {
+    width: 130px;
+  }
+  .kirisun-text {
+    font-size: 22px;
+    color: #fff;
+    font-weight: bold;
+    line-height: 40px;
+    padding-left: 10px;
+  }
 }
 
 .layout-footer {
@@ -154,7 +169,7 @@ export default {
   text-align: center;
   font-size: 12px;
   background: #a5a5a5;
-  color: #fff
+  color: #fff;
 }
 
 .ivu-col {
@@ -164,6 +179,9 @@ export default {
 }
 .menu-icon {
   transition: 0.2s all;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
   font-size: 28px !important;
 }
 .menu-icon-hide {

@@ -41,7 +41,7 @@
     >
     <Table
       @on-selection-change="onSelectionChange"
-      height="650"
+      height="620"
       :columns="columns"
       :data="data"
       stripe
@@ -190,7 +190,6 @@ export default {
             },
           })
           .then((res) => {
-            console.log(res);
             res.data.code == 500 && this.$Message.warning("存在已被绑定的apk，删除失败");
             res.data.code == 200 && this.queryApkList({});
             this.$Modal.remove();

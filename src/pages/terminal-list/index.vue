@@ -22,7 +22,7 @@
       </Form>
     </query-from>
     <list-top btnText="导入终端" @on-click="handleTerminal('new')" />
-    <Table height="650" :columns="columns" :data="data"></Table>
+    <Table height="620" :columns="columns" :data="data"></Table>
     <handle-terminal :visible.sync="visible" :data="editTerminalParams" />
   </div>
 </template>

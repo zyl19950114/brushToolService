@@ -3,8 +3,16 @@ import VRouter from "vue-router"
 
 Vue.use(VRouter)
 
-export default new VRouter({
+const roures = new VRouter({
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/pages/login'),
+      meta: {
+        navState: false,
+      },
+    },
     {
       path: '/',
       name: 'upload-apk',
@@ -47,3 +55,20 @@ export default new VRouter({
     }
   ]
 })
+
+
+// 全局路由守卫
+roures.beforeEach((to, from, next) => {
+  const token = sessionStorage.getItem('token');
+  if (to.path === '/login') {
+    next();
+  } else {
+    if (!token) {
+      next('/login');
+    } else {
+      next()
+    }
+  }
+})
+
+export default roures

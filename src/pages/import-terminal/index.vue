@@ -50,7 +50,7 @@
 
     <Table
       @on-selection-change="onSelectionChange"
-      height="650"
+      height="620"
       :context="self"
       :columns="columns"
       :data="data"

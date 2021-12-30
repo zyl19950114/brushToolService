@@ -1,11 +1,6 @@
 <template>
   <Menu :active-name="$route.path" theme="dark" width="auto">
-    <div class="layout-logo-left">
-      <div class="kirisun-logo">
-        <img src="@/assets/kirisun-logo.png" alt="" />
-      </div>
-      <p v-show="navShow">刷机工具</p>
-    </div>
+    
     <template v-for="item in routesList">
       <Menu-item
         :name="item.path"
