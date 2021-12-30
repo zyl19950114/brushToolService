@@ -104,14 +104,8 @@ export default {
           k == "operate_time"
             ? (params[`${k}$`] = `%${formatDateTime(this.queryParams[k])}%`)
             : (params[`${k}$`] = `%${this.queryParams[k]}%`);
-          // if (k === "date") {
-          //   params[`${k}$`] = `%${formatDateTime(this.queryParams[k])}%`;
-          // } else {
-          //   params[`${k}$`] = `%${this.queryParams[k]}%`;
-          // }
         }
       }
-      console.log(params);
       return params;
     },
   },
