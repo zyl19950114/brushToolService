@@ -15,14 +15,12 @@ axios.get('/webConfig.json').then((res) => {
 axios.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("token");
-    console.log('Get Token', token);
     if (token) { // 判断是否存在token，如果存在的话，则每个http headers都加上token
       config.headers['X-Access-Token'] = token;  // 请求头加上token
     }
     if (config.url.includes('/login')) {
       config.baseURL = config.loginURL;
     }
-    console.log(config);
     return config
   },
   (error) => {

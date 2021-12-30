@@ -162,7 +162,7 @@ export default {
       }
       &__input {
         width: 100%;
-        padding: 0 48px;
+        padding: 0 68px;
       }
       &__handle {
         color: rgba(255, 255, 255, 0.6);

@@ -33,16 +33,6 @@ const roures = new VRouter({
         icon: 'md-construct'
       },
     },
-    // {
-    //   path: '/terminal-list',
-    //   name: 'terminal-list',
-    //   component: () => import('@/pages/terminal-list'),
-    //   meta: {
-    //     navState: true,
-    //     navName: '授权终端列表',
-    //     icon: 'md-albums'
-    //   },
-    // },
     {
       path: '/log-list',
       name: 'log-list',
@@ -55,7 +45,6 @@ const roures = new VRouter({
     }
   ]
 })
-
 
 // 全局路由守卫
 roures.beforeEach((to, from, next) => {
