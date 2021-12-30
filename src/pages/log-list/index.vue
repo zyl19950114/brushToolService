@@ -101,7 +101,6 @@ export default {
       let params = {};
       for (const k in this.queryParams) {
         if (this.queryParams[k] && this.queryParams[k] !== "") {
-          console.log(k, `%${formatDateTime(this.queryParams[k])}%`);
           k == "operate_time"
             ? (params[`${k}$`] = `%${formatDateTime(this.queryParams[k])}%`)
             : (params[`${k}$`] = `%${this.queryParams[k]}%`);

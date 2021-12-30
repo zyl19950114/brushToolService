@@ -70,7 +70,7 @@ export default {
   },
   data() {
     return {
-      pageNumList: [10, 50, 100, 200, 500, 1000],
+      pageNumList: [10, 50, 100, 200],
       pageName: "10条",
     };
   },
