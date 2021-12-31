@@ -1,6 +1,5 @@
 <template>
   <Menu :active-name="$route.path" theme="dark" width="auto">
-    
     <template v-for="item in routesList">
       <Menu-item
         :name="item.path"
@@ -15,13 +14,14 @@
         </Poptip>
         <span v-show="navShow" class="layout-text">{{ item.meta.navName }}</span>
       </Menu-item>
-      <!-- <Submenu v-if="'children' in item" :index="item.path" :key="item.path">
+      <Submenu v-if="'children' in item" :index="item.path" :key="item.path">
         <template #title>
           <Icon :type="item.meta.icon" :size="iconSize"></Icon>
           <span v-show="navShow" class="layout-text">{{ item.meta.navName }}</span>
         </template>
+        <!-- 如有子路由，调用组件本身进行递归处理 -->
         <root-nav-list :routesList="item.children" />
-      </Submenu> -->
+      </Submenu>
     </template>
   </Menu>
 </template>

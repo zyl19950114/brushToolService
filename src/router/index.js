@@ -5,6 +5,7 @@ Vue.use(VRouter)
 
 const roures = new VRouter({
   routes: [
+    // 登录页
     {
       path: '/login',
       name: 'login',
@@ -13,6 +14,7 @@ const roures = new VRouter({
         navState: false,
       },
     },
+    // 上传apk
     {
       path: '/',
       name: 'upload-apk',
@@ -23,6 +25,7 @@ const roures = new VRouter({
         icon: 'md-cloud-upload'
       },
     },
+    // 导入授权终端
     {
       path: '/import-terminal',
       name: 'import-terminal',
@@ -33,6 +36,7 @@ const roures = new VRouter({
         icon: 'md-construct'
       },
     },
+    // 操作日志列表
     {
       path: '/log-list',
       name: 'log-list',

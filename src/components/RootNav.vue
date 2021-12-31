@@ -42,6 +42,7 @@
 </template>
 <script>
 import RootNavList from "./RootNavList";
+
 export default {
   name: "RootNav",
   components: {
@@ -74,6 +75,7 @@ export default {
       sessionStorage.removeItem('token');
       this.$router.push('/login')
     },
+
     filtterRoutes(routes, path = "") {
       let result = [];
       for (let index in routes) {
@@ -106,6 +108,7 @@ export default {
       }
       return result;
     },
+
     toggleClick() {
       if (this.spanLeft === 3) {
         this.spanLeft = 1;

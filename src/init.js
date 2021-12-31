@@ -4,6 +4,7 @@ import router from './router/index'
 import Message from 'iview/src/components/message';
 console.log('初始化');
 
+// 设置网页头部
 document.title = process.env.VUE_APP_TITLE;
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
 Vue.prototype.$webConfig = process.env;
