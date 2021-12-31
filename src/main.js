@@ -1,8 +1,8 @@
 import Vue from 'vue'
+import './init.js'
 import App from './App.vue'
 import router from './router';
 import iView from 'iview';
-import './init.js'
 import 'iview/dist/styles/iview.css';
 import '@mdi/font/css/materialdesignicons.css'
 import './assets/base.scss'

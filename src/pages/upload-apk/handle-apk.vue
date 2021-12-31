@@ -25,7 +25,7 @@
           accept=".apk"
           :format="['apk']"
           type="drag"
-          :action="$fileServerUrl"
+          :action="$webConfig.VUE_APP_FILEsSERVER_URL"
           :on-success="handleSuccess"
         >
           <div style="padding: 30px 0">
@@ -97,7 +97,6 @@ export default {
   },
   computed: {
     title() {
-      console.log(this.data);
       return this.data.status == "add" ? "上传" : "编辑";
     },
     modal: {

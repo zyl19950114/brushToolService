@@ -2,7 +2,7 @@
   <div class="layout" :class="{ 'layout-hide-text': spanLeft < 3 }">
     <div class="layout-header">
       <img class="kirisun-logo" src="@/assets/kirisun-logo.png" alt="" />
-      <span class="kirisun-text">终端刷写工具</span>
+      <span class="kirisun-text">{{ $webConfig.VUE_APP_TITLE }}</span>
       <Icon
         @click="toggleClick"
         :class="['menu-icon', { 'menu-icon-hide': spanLeft === 1 }]"
@@ -27,8 +27,7 @@
           <slot />
         </div>
         <footer class="layout-footer">
-          Copyright © 2020 - 2021 Kirisun Communication,Ltd. All Rights Reserved
-          brushTools V1.0
+          {{ $webConfig.VUE_APP_VISION }}
         </footer>
       </i-col>
     </Row>
@@ -60,7 +59,6 @@ export default {
       return this.filtterRoutes(routers);
     },
   },
-
   methods: {
     filtterRoutes(routes, path = "") {
       let result = [];
@@ -152,14 +150,14 @@ export default {
   align-items: center;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   .kirisun-logo {
-    width: 130px;
+    width: 140px;
   }
   .kirisun-text {
     font-size: 22px;
     color: #fff;
     font-weight: bold;
     line-height: 40px;
-    padding-left: 10px;
+    margin-left: 14px;
   }
 }
 

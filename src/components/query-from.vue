@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     handleClick(type) {
-      console.log(type);
       this.$emit(type, null, "query");
     },
   },

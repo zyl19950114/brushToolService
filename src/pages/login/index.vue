@@ -9,7 +9,7 @@
           <img src="@/assets/login-earth.png">
         </div> -->
         <div class="login-content__main__form">
-          <h1>终端刷写工具</h1>
+          <h1>{{ $webConfig.VUE_APP_TITLE }}</h1>
           <div class="login-content__main__form__input">
             <kirisun-input v-model="loginForm.username" placeholder="用户名" />
             <kirisun-input
@@ -37,10 +37,9 @@
         </div>
       </div>
     </div>
-    <div class="login-footer">
-      Copyright © 2020 - 2021 Kirisun Communication,Ltd. All Rights Reserved brushTools
-      V1.0
-    </div>
+    <footer class="login-footer">
+      {{ $webConfig.VUE_APP_VISION }}
+    </footer>
   </div>
 </template>
 

@@ -4,12 +4,9 @@ import router from './router/index'
 import Message from 'iview/src/components/message';
 console.log('初始化');
 
-axios.get('/webConfig.json').then((res) => {
-  axios.defaults.baseURL = res.data.baseURL;
-  axios.defaults.loginURL = res.data.loginURL;
-  document.title = res.data.webTtitle;
-  Vue.prototype.$fileServerUrl = res.data.fileServerUrl;
-})
+document.title = process.env.VUE_APP_TITLE;
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
+Vue.prototype.$webConfig = process.env;
 
 // 请求拦截
 axios.interceptors.request.use(
@@ -19,7 +16,8 @@ axios.interceptors.request.use(
       config.headers['X-Access-Token'] = token;  // 请求头加上token
     }
     if (config.url.includes('/login')) {
-      config.baseURL = config.loginURL;
+      console.log(process.env)
+      config.baseURL = process.env.VUE_APP_LOGIN_API;
     }
     return config
   },
