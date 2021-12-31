@@ -16,7 +16,6 @@ axios.interceptors.request.use(
       config.headers['X-Access-Token'] = token;  // 请求头加上token
     }
     if (config.url.includes('/login')) {
-      console.log(process.env)
       config.baseURL = process.env.VUE_APP_LOGIN_API;
     }
     return config

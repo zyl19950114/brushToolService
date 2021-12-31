@@ -9,6 +9,11 @@
             </FormItem>
           </Col>
           <Col span="4" class="col">
+            <FormItem label="操作人" prop="username">
+              <Input v-model="queryParams.username" clearable />
+            </FormItem>
+          </Col>
+          <Col span="4" class="col">
             <FormItem label="旧程序版本" prop="old_version">
               <Input v-model="queryParams.old_version" clearable />
             </FormItem>
@@ -37,8 +42,19 @@
       :total="total"
       @on-page="handlePage"
       @on-page-size="handlePageSize"
-    />
-    <Table height="620" :context="self" :columns="columns" :data="data" stripe></Table>
+    >
+      <Button class="bulk-import-btn" type="primary" shape="circle" @click="exportLog"
+        >日志导出</Button
+      >
+    </list-top>
+    <Table
+      ref="logTable"
+      height="620"
+      :context="self"
+      :columns="columns"
+      :data="data"
+      stripe
+    ></Table>
   </div>
 </template>
 
@@ -63,15 +79,16 @@ export default {
       },
       queryParams: {
         imei: "",
+        username: "",
         old_version: "",
         new_version: "",
         operate_time: "",
       },
       columns: [
         {
-          title: "编号",
-          key: "id",
-          width: 100,
+          title: "操作人",
+          key: "username",
+          width: 240,
         },
         {
           title: "终端IMEI",
@@ -113,6 +130,11 @@ export default {
     this.queryLogList({});
   },
   methods: {
+    exportLog() {
+      this.$refs.logTable.exportCsv({
+        filename: "操作日志",
+      });
+    },
     handleClear() {
       this.pageParams.page = 0;
       this.$refs.queryForm.resetFields();

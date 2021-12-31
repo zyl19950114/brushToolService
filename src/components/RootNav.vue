@@ -9,6 +9,13 @@
         type="md-menu"
         size="32"
       ></Icon>
+      <div class="layout-header__user">
+        <div class="layout-header__user__avatar">
+          <Icon type="ios-person" />
+        </div>
+        <span class="layout-header__user__user">{{ user }}</span>
+        <Icon @click="handleLogOut" class="layout-header__user__logOut" type="ios-log-out" />
+      </div>
     </div>
     <Row type="flex">
       <i-col :span="spanLeft" class="layout-menu-left">
@@ -47,6 +54,9 @@ export default {
     };
   },
   computed: {
+    user() {
+      return JSON.parse(sessionStorage.getItem("userData")).username;
+    },
     navShow() {
       let bool = true;
       if (this.spanLeft < 3) {
@@ -60,6 +70,10 @@ export default {
     },
   },
   methods: {
+    handleLogOut() {
+      sessionStorage.removeItem('token');
+      this.$router.push('/login')
+    },
     filtterRoutes(routes, path = "") {
       let result = [];
       for (let index in routes) {
@@ -149,6 +163,31 @@ export default {
   padding: 0 10px;
   align-items: center;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  &__user {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    &__avatar {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      background: #0087cf;
+      color: #fff;
+      line-height: 30px;
+      text-align: center;
+      font-size: 18px;
+    }
+    &__user {
+      padding: 0 10px;
+      border-right: 1px solid rgb(124, 124, 124);
+    }
+    &__logOut {
+      font-size: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
   .kirisun-logo {
     width: 140px;
   }

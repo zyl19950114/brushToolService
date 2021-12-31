@@ -82,6 +82,9 @@ export default {
     };
   },
   computed: {
+    user() {
+      return JSON.parse(sessionStorage.getItem("userData")).username;
+    },
     formatFormData() {
       let data = {};
       for (const k in this.formData) {
@@ -133,6 +136,7 @@ export default {
             .post(request, {
               Terminal: {
                 ...this.formatFormData,
+                // username: this.user,
                 id: this.data.params.id,
               },
             })
