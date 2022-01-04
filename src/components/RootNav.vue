@@ -14,7 +14,11 @@
           <Icon type="ios-person" />
         </div>
         <span class="layout-header__user__user">{{ user }}</span>
-        <Icon @click="handleLogOut" class="layout-header__user__logOut" type="ios-log-out" />
+        <Icon
+          @click="handleLogOut"
+          class="layout-header__user__logOut"
+          type="ios-log-out"
+        />
       </div>
     </div>
     <Row type="flex">
@@ -72,8 +76,8 @@ export default {
   },
   methods: {
     handleLogOut() {
-      sessionStorage.removeItem('token');
-      this.$router.push('/login')
+      sessionStorage.removeItem("token");
+      this.$router.push("/login");
     },
 
     filtterRoutes(routes, path = "") {
