@@ -44,10 +44,10 @@
         type="error"
         shape="circle"
       >
-        <i class="mdi mdi-delete-outline"></i> 批量删除</Button
-      >
+        <i class="mdi mdi-delete-outline" />
+        批量删除
+      </Button>
     </list-top>
-
     <Table
       @on-selection-change="onSelectionChange"
       height="620"
