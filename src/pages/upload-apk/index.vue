@@ -171,7 +171,6 @@ export default {
     },
     onSelectionChange(value) {
       this.selected = value;
-      console.log(value);
     },
     onCurrentChange(currentRow) {
       console.log(currentRow);
@@ -181,7 +180,6 @@ export default {
       this.handleApk("edit");
     },
     handleDelete(...arg) {
-      console.log();
       this.confirmDialog("确定删除该apk？", true, () => {
         this.$axios
           .post("/delete", {

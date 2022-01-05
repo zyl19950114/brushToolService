@@ -87,7 +87,6 @@ export default {
           params[`${k}$`] = `%${this.queryParams[k]}%`;
         }
       }
-      console.log("params", params);
       return params;
     },
     editTerminalParams() {
@@ -117,9 +116,6 @@ export default {
             ...this.queryParamsData,
           },
         })
-        .then((res) => {
-          console.log(res);
-        });
     },
   },
 };

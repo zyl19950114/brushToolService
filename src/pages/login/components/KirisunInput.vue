@@ -6,7 +6,7 @@
       :placeholder="placeholder"
       :value="value"
       @input="handleInput"
-    >
+    />
     <label class="input__label">{{ placeholder }}</label>
   </div>
 </template>
@@ -29,14 +29,14 @@ export default {
     },
     value: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   methods: {
     handleInput($event) {
-      this.$emit('input', $event.target.value);
-    }
-  }
+      this.$emit("input", $event.target.value);
+    },
+  },
 };
 </script>
 
@@ -51,19 +51,19 @@ export default {
   border: none;
   outline: none;
   border-radius: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, .4);
-  transition: .2s all;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: 0.2s all;
   width: 100%;
   height: 40px;
   padding: 0 8px;
   color: #000;
-  font-weight: 400!important;
+  font-weight: 400 !important;
   font-size: 14px;
 }
 
 .input__fill:not(:placeholder-shown),
 .input__fill:focus {
-  border-color: rgba(255, 255, 255, .6);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .input__fill::placeholder {
@@ -74,15 +74,15 @@ export default {
   position: absolute;
   left: 8px;
   top: 8px;
-  transition: transform .25s;
+  transition: transform 0.25s;
   font-size: 14px;
   pointer-events: none;
-  color: #515a6e;;
+  color: #515a6e;
 }
 
 .input__fill:not(:placeholder-shown) ~ .input__label,
 .input__fill:focus ~ .input__label {
   transform: translate(0, -28px);
-  color: rgba(255, 255, 255, .6);
+  color: rgba(255, 255, 255, 0.6);
 }
 </style>

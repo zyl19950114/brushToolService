@@ -198,7 +198,6 @@ export default {
       let params = {};
       for (const k in this.queryParams) {
         if (this.queryParams[k] && this.queryParams[k] !== "") {
-          console.log(k);
           if (k === "apk_id") {
             params[`${k}~`] = this.queryParams[k];
           } else {
@@ -206,7 +205,6 @@ export default {
           }
         }
       }
-      console.log(params);
       return params;
     },
     editTerminalParams() {
@@ -227,7 +225,6 @@ export default {
     },
     onSelectionChange(value) {
       this.selected = value;
-      console.log(value);
     },
     handleEdit(params) {
       this.editTerminalData = params;

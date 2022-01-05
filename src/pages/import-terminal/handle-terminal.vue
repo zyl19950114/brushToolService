@@ -141,7 +141,6 @@ export default {
               },
             })
             .then((res) => {
-              console.log(res);
               if (res.status === 200) this.$emit("on-ok", res);
               this.handleCancel();
             });
@@ -160,9 +159,7 @@ export default {
       this.queryApkList();
       if (this.data.status === "edit") {
         const { imei, remark, apk_id } = this.data.params;
-        console.log({ imei, remark });
         this.formData = { imei, remark, apk_id };
-        console.log(this.formData);
       }
     },
   },

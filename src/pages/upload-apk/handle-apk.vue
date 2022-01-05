@@ -217,7 +217,6 @@ export default {
       }
 
       this.file = file;
-      console.log(this.file);
       return false;
     },
     initializeParams() {

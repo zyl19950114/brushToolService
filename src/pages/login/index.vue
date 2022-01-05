@@ -113,14 +113,14 @@ export default {
 
 .login-header {
   width: 100%;
-  height: 60px;
-  padding: 0 20px;
+  height: 46px;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   background: rgba(0, 0, 0, 0.3);
   color: hsla(0, 0%, 100%, 0.6);
   img {
-    width: 160px;
+    width: 140px;
   }
   &__opitions {
     margin-left: auto;

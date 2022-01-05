@@ -106,18 +106,14 @@ export default {
 
       this.file = file;
       // this.formData.apk_name = this.file.name.split(".")[0];
-      console.log(this.file);
       return false;
     },
     handleImport(list) {
-      console.log(list);
-
       this.$axios
         .post("/post", {
           "Terminal[]": list,
         })
         .then((res) => {
-          console.log("完成");
           this.$emit("on-ok");
           this.handleCancel();
           return;
