@@ -217,7 +217,7 @@ export default {
         return false;
       }
       if (this.file) {
-        this.$Message.warning("已存在文件");
+        this.$Message.warning("只允许上传一个apk");
         return false;
       }
 
