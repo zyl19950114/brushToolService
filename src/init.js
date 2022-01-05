@@ -19,7 +19,7 @@ axios.interceptors.request.use(
     if (config.url.includes('/login')) {
       config.baseURL = process.env.VUE_APP_LOGIN_API;
     }
-    return config
+    return config;
   },
   (error) => {
     console.log('error', error)

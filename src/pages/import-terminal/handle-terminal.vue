@@ -35,7 +35,6 @@
 </template>
 
 <script>
-
 export default {
   name: "HandleTerminal",
   props: {
