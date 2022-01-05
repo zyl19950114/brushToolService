@@ -37,7 +37,12 @@
     </Form>
     <div class="file-list" v-if="!uploading">
       {{ file && file.name }}
-      <Button @click="handleDelete" type="text" class="file-list-btn">
+      <Button
+        v-if="file && file.name"
+        @click="handleDelete"
+        type="text"
+        class="file-list-btn"
+      >
         <i class="mdi mdi-close-circle"></i>
       </Button>
     </div>
@@ -115,7 +120,6 @@ export default {
   },
   methods: {
     handleDelete() {
-      this.formData.apk_name = "";
       this.file = null;
     },
     queryApkList(params) {
@@ -206,7 +210,8 @@ export default {
     },
     beforeUpload(file) {
       const fileType = file.name
-        .split(".")[file.name.split(".").length - 1].toLowerCase();
+        .split(".")
+        [file.name.split(".").length - 1].toLowerCase();
       if (fileType !== "apk") {
         this.$Message.warning("仅支持上传apk文件");
         return false;
@@ -224,6 +229,9 @@ export default {
       if (this.data.status === "edit") {
         const { apk_name, apk_url, version } = this.data.params;
         this.formData = { apk_name, apk_url, version };
+        this.file = {
+          name: apk_name,
+        };
       }
     },
   },
