@@ -36,16 +36,16 @@
         type="error"
         shape="circle"
       >
-        <i class="mdi mdi-delete-outline"></i> 批量删除</Button
-      ></list-top
-    >
+        <i class="mdi mdi-delete-outline" /> 批量删除
+      </Button>
+    </list-top>
     <Table
       @on-selection-change="onSelectionChange"
       height="620"
       :columns="columns"
       :data="data"
       stripe
-    ></Table>
+    />
     <handle-apk @on-ok="queryApkList({})" :visible.sync="visible" :data="editApkParams" />
   </div>
 </template>

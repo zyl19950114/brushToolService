@@ -29,7 +29,7 @@
           :on-success="handleSuccess"
         >
           <div style="padding: 30px 0">
-            <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+            <Icon type="ios-cloud-upload" size="52" style="color: #3399ff" />
             <p>点击或将apk文件拖拽到这里上传</p>
           </div>
         </Upload>
