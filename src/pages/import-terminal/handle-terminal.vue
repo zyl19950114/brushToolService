@@ -141,6 +141,7 @@ export default {
             })
             .then((res) => {
               if (res.status === 200) this.$emit("on-ok", res);
+              this.$Message.success("导入成功");
               this.handleCancel();
             });
         }

@@ -242,6 +242,7 @@ export default {
             this.$Modal.remove();
             this.queryTerminalList({});
             this.selected = [];
+            this.$Message.success("删除成功");
           });
       });
     },

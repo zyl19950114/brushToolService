@@ -43,7 +43,7 @@
         type="text"
         class="file-list-btn"
       >
-        <i class="mdi mdi-close-circle"></i>
+        <i class="mdi mdi-close-circle" />
       </Button>
     </div>
     <div slot="footer">

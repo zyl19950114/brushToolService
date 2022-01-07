@@ -115,6 +115,7 @@ export default {
         })
         .then((res) => {
           this.$emit("on-ok");
+          this.$Message.success("导入成功");
           this.handleCancel();
           return;
         });
