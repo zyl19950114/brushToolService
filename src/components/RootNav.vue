@@ -15,6 +15,7 @@
         </div>
         <span class="layout-header__user__user">{{ user }}</span>
         <Icon
+          title="退出"
           @click="handleLogOut"
           class="layout-header__user__logOut"
           type="ios-log-out"

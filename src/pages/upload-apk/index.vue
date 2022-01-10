@@ -189,7 +189,8 @@ export default {
           })
           .then((res) => {
             res.data.code == 500 && this.$Message.warning("该apk已被绑定，删除失败");
-            res.data.code == 200 && (this.queryApkList({}), this.$Message.success("删除成功"));
+            res.data.code == 200 &&
+              (this.queryApkList({}), this.$Message.success("删除成功"));
             this.$Modal.remove();
             this.selected = [];
           });

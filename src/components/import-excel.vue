@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     handleCancel() {
+      this.file = null;
       this.$emit("update:visible", false);
     },
     exportData() {
@@ -94,15 +95,16 @@ export default {
     },
     beforeUpload(file) {
       const fileType = file.name
-        .split(".")[file.name.split(".").length - 1].toLowerCase();
+        .split(".")
+        [file.name.split(".").length - 1].toLowerCase();
       if (fileType.indexOf("xls") == -1) {
         this.$Message.warning("仅支持上传excel文件");
         return false;
       }
-      if (this.file) {
-        this.$Message.warning("已存在文件");
-        return false;
-      }
+      // if (this.file) {
+      //   this.$Message.warning("已存在文件");
+      //   return false;
+      // }
 
       this.file = file;
       // this.formData.apk_name = this.file.name.split(".")[0];
@@ -114,10 +116,14 @@ export default {
           "Terminal[]": list,
         })
         .then((res) => {
-          this.$emit("on-ok");
-          this.$Message.success("导入成功");
-          this.handleCancel();
-          return;
+          console.log(res);
+          if (res && res.data.code === 200) {
+            this.$emit("on-ok");
+            this.$Message.success("导入成功");
+            this.handleCancel();
+          } else {
+            this.$Message.warning("请按格式上传");
+          }
         });
     },
   },
