@@ -61,7 +61,10 @@ export default {
   },
   computed: {
     user() {
-      return JSON.parse(sessionStorage.getItem("userData")).username;
+      return (
+        sessionStorage.getItem("userData") &&
+        JSON.parse(sessionStorage.getItem("userData")).username
+      );
     },
     navShow() {
       let bool = true;
@@ -154,7 +157,8 @@ export default {
 }
 .layout-content-main {
   padding: 10px;
-  flex: 1;
+  height: calc(100vh - 66px);
+  overflow-y: auto;
 }
 .layout-copy {
   text-align: center;

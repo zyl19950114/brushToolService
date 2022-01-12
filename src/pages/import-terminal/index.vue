@@ -50,7 +50,6 @@
     </list-top>
     <Table
       @on-selection-change="onSelectionChange"
-      height="620"
       :context="self"
       :columns="columns"
       :data="data"

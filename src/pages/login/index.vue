@@ -85,9 +85,8 @@ export default {
             this.$Message.success("登录成功", 10);
             sessionStorage.setItem("token", res.data.desc);
             sessionStorage.setItem("rememberUser", this.isRemember);
-            this.isRemember &&
-              sessionStorage.setItem("userData", JSON.stringify(this.loginForm));
-            !this.isRemember && sessionStorage.removeItem("userData");
+            sessionStorage.setItem("userData", JSON.stringify(this.loginForm));
+            // !this.isRemember && sessionStorage.removeItem("userData");
             this.$router.push("/");
           } else {
             this.$Message.error("用户名或密码错误", 10);

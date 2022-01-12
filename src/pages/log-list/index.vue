@@ -47,14 +47,7 @@
         日志导出
       </Button>
     </list-top>
-    <Table
-      ref="logTable"
-      height="620"
-      :context="self"
-      :columns="columns"
-      :data="data"
-      stripe
-    ></Table>
+    <Table ref="logTable" :context="self" :columns="columns" :data="data" stripe></Table>
   </div>
 </template>
 
