@@ -9,8 +9,8 @@
             </FormItem>
           </Col>
           <Col span="4" class="col">
-            <FormItem label="操作人" prop="username">
-              <Input v-model="queryParams.username" clearable />
+            <FormItem label="操作人" prop="operate_by">
+              <Input v-model="queryParams.operate_by" clearable />
             </FormItem>
           </Col>
           <Col span="4" class="col">
@@ -43,9 +43,9 @@
       @on-page="handlePage"
       @on-page-size="handlePageSize"
     >
-      <Button class="bulk-import-btn" type="primary" shape="circle" @click="exportLog"
-        >日志导出</Button
-      >
+      <Button class="bulk-import-btn" type="primary" shape="circle" @click="exportLog">
+        日志导出
+      </Button>
     </list-top>
     <Table
       ref="logTable"
@@ -79,7 +79,7 @@ export default {
       },
       queryParams: {
         imei: "",
-        username: "",
+        operate_by: "",
         old_version: "",
         new_version: "",
         operate_time: "",
@@ -87,8 +87,12 @@ export default {
       columns: [
         {
           title: "操作人",
-          key: "username",
+          key: "operate_by",
           width: 240,
+        },
+        {
+          title: "ip地址",
+          key: "ip_address",
         },
         {
           title: "终端IMEI",
