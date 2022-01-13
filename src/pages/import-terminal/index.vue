@@ -66,7 +66,7 @@
 
 <script>
 import HandleTerminal from "./handle-terminal.vue";
-import ListTop from "../../components/list-top.vue";
+import ListTop from "../../components/list-top.vue";  
 import QueryFrom from "../../components/query-from.vue";
 import ImportExcel from "../../components/import-excel.vue";
 

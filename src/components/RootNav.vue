@@ -158,6 +158,7 @@ export default {
 .layout-content-main {
   padding: 10px;
   height: calc(100vh - 66px);
+  overflow: hidden;
   overflow-y: auto;
 }
 .layout-copy {
