@@ -211,7 +211,6 @@ export default {
   },
   created() {
     this.queryTerminalList();
-    // this.init
   },
   methods: {
     async handleDeleteApks() {

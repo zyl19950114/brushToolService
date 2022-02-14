@@ -6,7 +6,7 @@
     @on-cancel="handleCancel"
   >
     <div class="hint">
-      <Tooltip content="Right Bottom 文字提示" placement="center-end">
+      <Tooltip placement="bottom">
         <i>?</i>
         <div slot="content">
           <p>导入格式</p>

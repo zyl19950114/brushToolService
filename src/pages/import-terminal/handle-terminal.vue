@@ -12,8 +12,8 @@
         <Input type="number" v-model="formData.imei" placeholder="请输入IMEI"></Input>
       </Form-item>
       <Form-item label="绑定apk" prop="apk_id">
-        <Select v-model="formData.apk_id" filterable>
-          <Option v-for="item in apkList" :value="item.id" :key="item.id">
+        <Select v-model="formData.apk_id">
+          <Option v-for="(item, index) in apkList" :value="item.id" :key="index">
             {{ item.apk_name }} <span>版本：{{ item.version }}</span>
           </Option>
         </Select>
