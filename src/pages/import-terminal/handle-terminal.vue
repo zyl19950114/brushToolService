@@ -55,7 +55,7 @@ export default {
         imei: [
           {
             required: true,
-            message: "imei不能为空",
+            message: "imei只能整数",
             trigger: "blur",
           },
           { min: 15, max: 15, message: "imei码应为15位", trigger: "blur" },

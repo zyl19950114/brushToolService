@@ -9,7 +9,7 @@
             </FormItem>
           </Col>
           <Col span="4" class="col">
-            <FormItem label="apk链接" prop="apk_name">
+            <FormItem label="apk链接" prop="apk_url">
               <Input v-model="queryParams.apk_url" clearable />
             </FormItem>
           </Col>
@@ -98,7 +98,6 @@ export default {
         {
           title: "操作",
           key: "action",
-          fixed: "right",
           width: 160,
           render: (h, params) => {
             return h("div", [
@@ -233,7 +232,8 @@ export default {
         })
         .then((res) => {
           if (res.data.total === 0) {
-            this.$Message.warning("暂无数据");
+            // this.$Message.warning("暂无数据");
+            this.data = [];
             return;
           }
           this.total = res.data.total;

@@ -127,7 +127,6 @@ export default {
         {
           title: "操作",
           key: "action",
-          fixed: "right",
           width: 160,
           render: (h, params) => {
             return h("div", [
@@ -278,7 +277,8 @@ export default {
         })
         .then((res) => {
           if (res.data.total === 0) {
-            this.$Message.warning("暂无数据");
+            // this.$Message.warning("暂无数据");
+            this.data = [];
             return;
           }
           this.total = res.data.total;

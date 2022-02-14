@@ -5,6 +5,15 @@
     :styles="{ top: '20px' }"
     @on-cancel="handleCancel"
   >
+    <div class="hint">
+      <Tooltip content="Right Bottom 文字提示" placement="center-end">
+        <i>?</i>
+        <div slot="content">
+          <p>导入格式</p>
+          <Table :columns="importFormat" :data="importFormatData"></Table>
+        </div>
+      </Tooltip>
+    </div>
     <Upload
       ref="upload"
       :before-upload="beforeUpload"
@@ -35,6 +44,35 @@ export default {
   data() {
     return {
       file: null,
+      importFormat: [
+        {
+          title: "imei",
+          key: "imei",
+          width: 200,
+        },
+        {
+          title: "apk_id",
+          key: "apk_id",
+          width: 100,
+        },
+        {
+          title: "remark",
+          key: "remark",
+          width: 100,
+        },
+      ],
+      importFormatData: [
+        {
+          imei: 111111111111111,
+          apk_id: 79,
+          remark: "备注",
+        },
+        {
+          imei: 222222222222222,
+          apk_id: 79,
+          remark: "备注",
+        },
+      ],
     };
   },
   computed: {
@@ -130,4 +168,26 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.hint {
+  position: absolute;
+  top: 15px;
+  left: 76px;
+  i {
+    font-style: normal;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #e96900;
+    color: #fff;
+    font-size: 10px;
+    cursor: pointer;
+  }
+ ::v-deep .ivu-tooltip-inner {
+    max-width: 1000px !important;
+  }
+}
+</style>

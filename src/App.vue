@@ -39,4 +39,11 @@ export default {
   transform: translate3d(30px, 0, 0);
   opacity: 0;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 </style>

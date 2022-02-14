@@ -94,6 +94,11 @@ export default {
         {
           title: "操作时间",
           key: "operate_time",
+          render: (h, params) => {
+            const format = params.row.operate_time.split('.');
+            const time = format[0] || params.row.operate_time;
+            return h('div', time)
+          }
         },
         {
           title: "旧程序版本",
@@ -164,7 +169,8 @@ export default {
         })
         .then((res) => {
           if (res.data.total === 0) {
-            this.$Message.warning("暂无数据");
+            // this.$Message.warning("暂无数据");
+            this.data = [];
             return;
           }
           this.total = res.data.total;
