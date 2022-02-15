@@ -118,8 +118,8 @@ export default {
           key: "imei",
           render: (h, params) => {
             if (!params.row.apk_id || this.bindedApk.length == 0) return;
-            let akpData = this.bindedApk.find((res) => {
-              return res.id == params.row.apk_id;
+            const akpData = this.bindedApk.find((res) => {
+              return res.id === params.row.apk_id;
             });
             return h("div", [
               h("div", akpData.apk_name),

@@ -82,6 +82,7 @@ export default {
     handleLogOut() {
       sessionStorage.removeItem("token");
       this.$router.push("/login");
+      this.$Message.success("退出登录成功");
     },
 
     filtterRoutes(routes, path = "") {
