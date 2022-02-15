@@ -8,8 +8,8 @@
               <Input type="number" v-model="queryParams.imei" clearable />
             </FormItem>
           </Col>
-          <!-- <Col span="4" class="col">
-            <FormItem label="状态" prop="stauts">
+          <Col span="4" class="col">
+            <FormItem label="状态" prop="apk_id">
               <Select clearable v-model="queryParams.apk_id" style="width: 200px">
                 <Option
                   v-for="item in statusList"
@@ -19,7 +19,7 @@
                 >
               </Select>
             </FormItem>
-          </Col> -->
+          </Col>
         </Row>
       </Form>
     </query-from>
@@ -66,7 +66,7 @@
 
 <script>
 import HandleTerminal from "./handle-terminal.vue";
-import ListTop from "../../components/list-top.vue";  
+import ListTop from "../../components/list-top.vue";
 import QueryFrom from "../../components/query-from.vue";
 import ImportExcel from "../../components/import-excel.vue";
 
@@ -80,13 +80,14 @@ export default {
   data() {
     return {
       selected: [],
+      bindedApk: [],
       statusList: [
         {
-          value: "^[0-9]+$",
+          value: ">0",
           label: "已绑定",
         },
         {
-          value: "^''+$",
+          value: "=null",
           label: "未绑定",
         },
       ],
@@ -111,6 +112,31 @@ export default {
         {
           title: "终端IMEI",
           key: "imei",
+        },
+        {
+          title: "APK版本",
+          key: "imei",
+          render: (h, params) => {
+            if (!params.row.apk_id || this.bindedApk.length == 0) return;
+            let akpData = this.bindedApk.find((res) => {
+              return res.id == params.row.apk_id;
+            });
+            return h("div", [
+              h("div", akpData.apk_name),
+              h("span", [
+                h("span", "版本："),
+                h(
+                  "Tag",
+                  {
+                    attrs: {
+                      color: "blue",
+                    },
+                  },
+                  akpData.version
+                ),
+              ]),
+            ]);
+          },
         },
         {
           title: "状态",
@@ -197,7 +223,7 @@ export default {
       for (const k in this.queryParams) {
         if (this.queryParams[k] && this.queryParams[k] !== "") {
           if (k === "apk_id") {
-            params[`${k}~`] = this.queryParams[k];
+            params[`${k}{}`] = this.queryParams[k];
           } else {
             params[`${k}$`] = `%${this.queryParams[k]}%`;
           }
@@ -261,6 +287,27 @@ export default {
       this.pageParams.page = page - 1;
       this.queryTerminalList({});
     },
+    queryApklList(params) {
+      return new Promise((resovle) => {
+        this.$axios
+          .post("/get", {
+            "[]": {
+              Apk: {
+                ...params,
+              },
+              query: 2,
+            },
+            "total@": "/[]/total",
+          })
+          .then((res) => {
+            const data = res.data["[]"].reduce((crr, next) => {
+              crr.push(next.Apk);
+              return crr;
+            }, []);
+            resovle(data);
+          });
+      });
+    },
     queryTerminalList(params) {
       this.$axios
         .post("/get", {
@@ -274,17 +321,22 @@ export default {
           },
           "total@": "/[]/total",
         })
-        .then((res) => {
+        .then(async (res) => {
           if (res.data.total === 0) {
             // this.$Message.warning("暂无数据");
             this.data = [];
             return;
           }
           this.total = res.data.total;
+          let bindedApk = [];
           this.data = res.data["[]"].reduce((crr, next) => {
             crr.push(next.Terminal);
+            next.Terminal.apk_id &&
+              bindedApk.indexOf(next.Terminal.apk_id) == -1 &&
+              bindedApk.push(next.Terminal.apk_id);
             return crr;
           }, []);
+          this.bindedApk = await this.queryApklList({ "id{}": bindedApk });
         });
     },
   },

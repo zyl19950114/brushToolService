@@ -1,5 +1,6 @@
 <template>
   <div class="upload-terminal">
+    <Spin fix v-if="loading"></Spin>
     <query-from @on-query="queryApkList(queryParamsData)" @on-clear="handleClear">
       <Form label-position="top" class="query-from" :model="queryParams" ref="queryForm">
         <Row :gutter="16">
@@ -62,6 +63,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       selected: [],
       editApkData: null,
       visible: false,
@@ -178,6 +180,7 @@ export default {
       this.editApkData = params;
       this.handleApk("edit");
     },
+
     handleDelete(...arg) {
       this.confirmDialog("确定删除该apk？", true, () => {
         this.$axios
@@ -186,12 +189,72 @@ export default {
               "id{}": arg,
             },
           })
-          .then((res) => {
-            res.data.code == 500 && this.$Message.warning("该apk已被绑定，删除失败");
-            res.data.code == 200 &&
-              (this.queryApkList({}), this.$Message.success("删除成功"));
+          .then(async (res) => {
+            switch (res.data.code) {
+              case 500:
+                this.loading = true;
+                // this.$Message.warning("该apk已被绑定，删除失败");
+                const bindedTerminal = await this.queryTerminalList();
+                this.$Message.warning({
+                  top: 50,
+                  duration: 4,
+                  render: (h) => {
+                    let tag = [];
+                    bindedTerminal.forEach((res) => {
+                      tag.push(
+                        h(
+                          "Tag",
+                          {
+                            attrs: {
+                              color: "blue",
+                            },
+                          },
+                          res
+                        )
+                      );
+                    });
+                    return h("span", [
+                      h("span", "删除失败！ "),
+                      ...tag,
+                      h("span", " 已被终端绑定"),
+                    ]);
+                  },
+                });
+                this.loading = false;
+                break;
+              case 200:
+                this.queryApkList({});
+                this.$Message.success("删除成功");
+                this.selected = [];
+                break;
+            }
             this.$Modal.remove();
-            this.selected = [];
+          });
+      });
+    },
+
+    // 查询已绑定apk的终端
+    queryTerminalList() {
+      return new Promise((resovle) => {
+        this.$axios
+          .post("/get", {
+            "[]": {
+              Terminal: {
+                "apk_id~": "^[0-9]+$",
+              },
+              query: 2,
+            },
+            "total@": "/[]/total",
+          })
+          .then((res) => {
+            let binded = [];
+            res.data["[]"].forEach((item) => {
+              const result = this.selected.find((select) => {
+                return item.Terminal.apk_id === select.id;
+              });
+              result && binded.push(result.apk_name);
+            });
+            resovle(binded);
           });
       });
     },
