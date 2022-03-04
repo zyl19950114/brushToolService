@@ -7,7 +7,7 @@
   >
     <Form
       ref="uploadApk"
-      :rules="rules"
+      :rules="ruleValidate"
       class="between"
       :model="formData"
       :label-width="80"
@@ -75,22 +75,6 @@ export default {
   },
   data() {
     return {
-      rules: {
-        apk_name: [
-          {
-            required: true,
-            message: "请输入文件名",
-            trigger: "blur",
-          },
-        ],
-        version: [
-          {
-            required: true,
-            message: "请输入版本号",
-            trigger: "blur",
-          },
-        ],
-      },
       formData: {
         apk_name: "",
         apk_url: "",
@@ -101,6 +85,56 @@ export default {
     };
   },
   computed: {
+    ruleValidate() {
+      return {
+        apk_name: [
+          {
+            required: true,
+            validator: (rule, value, callback) => {
+              if (
+                this.formData.apk_name &&
+                this.formData.apk_name != "" &&
+                this.data.status != "edit"
+              ) {
+                this.$axios
+                  .post("/get", {
+                    "[]": {
+                      Apk: {
+                        apk_name: this.formData.apk_name,
+                      },
+                      query: 2,
+                    },
+                    "total@": "/[]/total",
+                  })
+                  .then((res) => {
+                    if (res.data["[]"] && res.data["[]"].length != 0) {
+                      callback(new Error("apk名称已存在"));
+                    } else {
+                      callback();
+                    }
+                  });
+              } else {
+                callback();
+              }
+            },
+            trigger: "blur",
+          },
+          {
+            required: true,
+            message: "请输入文件名",
+            trigger: "blur",
+          },
+        ],
+
+        version: [
+          {
+            required: true,
+            message: "请输入版本号",
+            trigger: "blur",
+          },
+        ],
+      };
+    },
     title() {
       return this.data.status == "add" ? "上传" : "编辑";
     },

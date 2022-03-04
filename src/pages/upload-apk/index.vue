@@ -83,6 +83,10 @@ export default {
           align: "center",
         },
         {
+          title: "apk编号",
+          key: "id",
+        },
+        {
           title: "apk名称",
           key: "apk_name",
           sortable: true,
@@ -195,6 +199,7 @@ export default {
                 this.loading = true;
                 // this.$Message.warning("该apk已被绑定，删除失败");
                 const bindedTerminal = await this.queryTerminalList();
+                console.log(bindedTerminal);
                 this.$Message.warning({
                   top: 50,
                   duration: 4,
@@ -252,7 +257,9 @@ export default {
               const result = this.selected.find((select) => {
                 return item.Terminal.apk_id === select.id;
               });
-              result && binded.push(result.apk_name);
+              result &&
+                binded.indexOf(result.apk_name) == -1 &&
+                binded.push(result.apk_name);
             });
             resovle(binded);
           });

@@ -1,7 +1,7 @@
 <template>
   <Modal :title="`${title}终端`" v-model="modal" :styles="{ top: '60px' }">
     <Form
-      :rules="rules"
+      :rules="ruleValidate"
       ref="HandleTerminal"
       class="between"
       :model="formData"
@@ -51,11 +51,52 @@ export default {
   },
   data() {
     return {
-      rules: {
+      apkList: [],
+      formData: {
+        imei: "",
+        remark: "",
+        apk_id: "",
+      },
+    };
+  },
+  computed: {
+    ruleValidate() {
+      return {
         imei: [
           {
             required: true,
-            message: "imei只能整数",
+            validator: (rule, value, callback) => {
+              if (
+                this.formData.imei &&
+                this.formData.imei != "" &&
+                this.data.status != "edit"
+              ) {
+                this.$axios
+                  .post("/get", {
+                    "[]": {
+                      Terminal: {
+                        imei: this.formData.imei,
+                      },
+                      query: 2,
+                    },
+                    "total@": "/[]/total",
+                  })
+                  .then((res) => {
+                    if (res.data["[]"] && res.data["[]"].length != 0) {
+                      callback(new Error("imei码已存在"));
+                    } else {
+                      callback();
+                    }
+                  });
+              } else {
+                callback();
+              }
+            },
+            trigger: "blur",
+          },
+          {
+            required: true,
+            message: "请输入imei码",
             trigger: "blur",
           },
           { min: 15, max: 15, message: "imei码应为15位", trigger: "blur" },
@@ -71,16 +112,8 @@ export default {
             message: "请绑定apk",
           },
         ],
-      },
-      apkList: [],
-      formData: {
-        imei: "",
-        remark: "",
-        apk_id: "",
-      },
-    };
-  },
-  computed: {
+      };
+    },
     user() {
       return JSON.parse(sessionStorage.getItem("userData")).username;
     },
