@@ -1,6 +1,6 @@
 <template>
   <Modal
-    title="批量上传"
+    title="批量导入"
     v-model="modal"
     :styles="{ top: '20px' }"
     @on-cancel="handleCancel"
