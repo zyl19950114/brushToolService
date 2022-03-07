@@ -154,7 +154,6 @@ export default {
           "Terminal[]": list,
         })
         .then((res) => {
-          console.log(res);
           if (res && res.data.code === 200) {
             this.$emit("on-ok");
             this.$Message.success("导入成功");
