@@ -1,0 +1,4 @@
+{
+    "baseURL": "http://183.47.46.244:8011/brushToolService",
+    "loginURL": "http://183.47.46.244:5080/ds/nms"
+}
